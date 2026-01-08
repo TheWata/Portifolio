@@ -1,0 +1,304 @@
+/* --- Variáveis Globais & Reset --- */
+:root {
+    /* Cores Base */
+    --bg-dark: #0a0b10;
+    --bg-panel: #14161f;
+    --text-main: #e0e6ed;
+    --text-muted: #94a3b8;
+    
+    /* Cores Temáticas (Neon) */
+    --color-dev: #00f3ff;   /* Azul Ciano Neon */
+    --color-data: #0aff60;  /* Verde Matrix Neon */
+    --color-game: #bd00ff;  /* Roxo Cyberpunk Neon */
+
+    /* Fontes */
+    --font-display: 'Rajdhani', sans-serif; /* Para títulos */
+    --font-code: 'JetBrains Mono', monospace; /* Para detalhes técnicos */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: var(--font-display);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+a { text-decoration: none; color: inherit; transition: 0.3s; }
+ul { list-style: none; }
+
+/* --- Navbar Futurista --- */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 1.5rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(10, 11, 16, 0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.blink { animation: blinker 1s linear infinite; }
+@keyframes blinker { 50% { opacity: 0; } }
+
+.nav-links { display: flex; gap: 2rem; }
+
+.nav-links a {
+    font-family: var(--font-code);
+    font-size: 0.9rem;
+    position: relative;
+    padding: 5px 10px;
+}
+
+/* Hover Effects Específicos por Tema */
+.link-dev:hover { color: var(--color-dev); text-shadow: 0 0 10px var(--color-dev); }
+.link-data:hover { color: var(--color-data); text-shadow: 0 0 10px var(--color-data); }
+.link-game:hover { color: var(--color-game); text-shadow: 0 0 10px var(--color-game); }
+
+/* --- Hero Section --- */
+.hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero h1 {
+    font-size: 4rem;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    letter-spacing: 4px;
+}
+
+/* Status Module (HUD Style) */
+.status-module {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-left: 4px solid var(--color-data); /* Cor do foco atual */
+    font-family: var(--font-code);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+    display: inline-flex;
+    gap: 10px;
+}
+
+.status-label { color: var(--text-muted); }
+.status-value { color: var(--color-data); font-weight: bold; }
+
+.hero-description {
+    max-width: 600px;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+}
+
+.cta-button {
+    padding: 12px 30px;
+    border: 1px solid var(--text-main);
+    font-family: var(--font-code);
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-button:hover {
+    background: var(--text-main);
+    color: var(--bg-dark);
+    box-shadow: 0 0 20px rgba(255,255,255,0.3);
+}
+
+/* Background Grid Sutil no Hero */
+.hero-bg-grid {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -1;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    mask-image: radial-gradient(circle, black 40%, transparent 80%);
+}
+
+/* --- Seção de Temas (NOVA) --- */
+.themes-section {
+    padding: 5rem 5%;
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.themes-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 1200px;
+    width: 100%;
+}
+
+/* --- Theme Card Styles (NOVO) --- */
+.theme-card {
+    background: var(--bg-panel);
+    border-radius: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    height: 400px; /* Altura inicial fixa */
+    width: 100%;
+}
+
+.theme-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    z-index: 10;
+    height: 450px; /* Expande a altura no hover */
+}
+
+/* Card Background Patterns (Baseado nos Temas) */
+.card-bg-pattern {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    opacity: 0.1;
+    z-index: -1;
+    transition: opacity 0.5s;
+}
+.theme-card:hover .card-bg-pattern { opacity: 0.2; }
+
+.theme-dev .card-bg-pattern {
+    background-image: repeating-linear-gradient(0deg, transparent, transparent 19px, var(--color-dev) 20px);
+}
+.theme-data .card-bg-pattern {
+    background-image: radial-gradient(var(--color-data) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+.theme-game .card-bg-pattern {
+    background-image: conic-gradient(from 90deg at 0 0, transparent 90deg, var(--color-game) 100%);
+    background-size: 40px 40px;
+    opacity: 0.05;
+}
+
+/* Card Icon */
+.card-icon {
+    font-family: var(--font-code);
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    transition: transform 0.5s;
+}
+.theme-card:hover .card-icon { transform: scale(1.2); }
+.theme-dev .card-icon { color: var(--color-dev); }
+.theme-data .card-icon { color: var(--color-data); }
+.theme-game .card-icon { color: var(--color-game); }
+
+/* Card Title */
+.theme-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    transition: color 0.3s;
+}
+.theme-dev:hover .theme-title { color: var(--color-dev); }
+.theme-data:hover .theme-title { color: var(--color-data); }
+.theme-game:hover .theme-title { color: var(--color-game); }
+
+/* Card Description */
+.theme-description {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    margin-bottom: auto;
+    line-height: 1.6;
+    opacity: 0.8;
+    transition: opacity 0.5s;
+}
+.theme-card:hover .theme-description { opacity: 1; }
+
+/* Card Link */
+.card-link {
+    font-family: var(--font-code);
+    font-size: 1rem;
+    padding: 10px 20px;
+    border: 1px solid;
+    border-radius: 5px;
+    margin-top: 1.5rem;
+    transition: all 0.3s;
+    opacity: 0.8;
+}
+.theme-card:hover .card-link { opacity: 1; }
+
+.theme-dev .card-link {
+    color: var(--color-dev);
+    border-color: var(--color-dev);
+}
+.theme-dev .card-link:hover {
+    background: var(--color-dev);
+    color: var(--bg-panel);
+    box-shadow: 0 0 15px var(--color-dev);
+}
+
+.theme-data .card-link {
+    color: var(--color-data);
+    border-color: var(--color-data);
+}
+.theme-data .card-link:hover {
+    background: var(--color-data);
+    color: var(--bg-panel);
+    box-shadow: 0 0 15px var(--color-data);
+}
+
+.theme-game .card-link {
+    color: var(--color-game);
+    border-color: var(--color-game);
+}
+.theme-game .card-link:hover {
+    background: var(--color-game);
+    color: var(--bg-panel);
+    box-shadow: 0 0 15px var(--color-game);
+}
+
+/* Bordas e Brilhos Temáticos no Hover */
+.theme-dev:hover {
+    border-color: var(--color-dev);
+    box-shadow: 0 0 25px rgba(0, 243, 255, 0.3);
+}
+.theme-data:hover {
+    border-color: var(--color-data);
+    box-shadow: 0 0 25px rgba(10, 255, 96, 0.3);
+}
+.theme-game:hover {
+    border-color: var(--color-game);
+    box-shadow: 0 0 25px rgba(189, 0, 255, 0.3);
+}
+
+/* Responsividade */
+@media (max-width: 992px) {
+    .themes-container { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+    .themes-container { grid-template-columns: 1fr; }
+    .theme-card { height: auto; }
+    .theme-card:hover { height: auto; transform: scale(1.02); }
+    .hero h1 { font-size: 2.5rem; }
+}
