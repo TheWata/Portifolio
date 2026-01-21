@@ -10,11 +10,27 @@
     --color-dev: #00f3ff;   /* Azul Ciano Neon */
     --color-data: #0aff60;  /* Verde Matrix Neon */
     --color-game: #bd00ff;  /* Roxo Cyberpunk Neon */
+    --color-wip: #ffe600;   /* Amarelo Neon para Em Desenvolvimento */
 
     /* Fontes */
     --font-display: 'Rajdhani', sans-serif; /* Para títulos */
     --font-code: 'JetBrains Mono', monospace; /* Para detalhes técnicos */
 }
+/* Icones lucide */
+.node-icon svg {
+    width: 24px;
+    height: 24px;
+    color: #ffffff;
+    stroke-width: 2px;
+    filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.8));
+    transition: transform 0.3s ease;
+}
+
+.skill-node:hover .node-icon svg {
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 8px #ffffff);
+}
+
 
 * {
     margin: 0;
@@ -107,7 +123,6 @@ ul { list-style: none; }
 .status-value { color: var(--color-data); font-weight: bold; }
 
 .hero-description {
-    max-width: 600px;
     color: var(--text-muted);
     margin-bottom: 2rem;
 }
@@ -302,3 +317,349 @@ ul { list-style: none; }
     .theme-card:hover { height: auto; transform: scale(1.02); }
     .hero h1 { font-size: 2.5rem; }
 }
+
+/* --- Skill Tree Styles (About Me) --- */
+.skill-tree-section {
+    position: relative;
+    padding: 6rem 5%;
+    min-height: 100vh;
+    display: flex;
+    gap: 4rem;
+    align-items: center;
+    /* Background removido para usar o grid global */
+    overflow: hidden;
+}
+
+/* Background Grid (Reutilizado) */
+.skill-tree-section .hero-bg-grid {
+    z-index: 0; /* Atrás de tudo */
+}
+
+/* Layout em duas colunas: Info e �rvore */
+.about-content {
+    flex: 1;
+    max-width: 400px;
+    z-index: 10;
+}
+
+.skill-tree-container {
+    flex: 2;
+    position: relative;
+    height: 600px; /* Altura fixa para o canvas da �rvore */
+    background: rgba(20, 22, 31, 0.5);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(5px);
+    box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
+}
+
+/* SVG Lines */
+.skill-lines-svg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.connection-line {
+    stroke: var(--text-muted);
+    stroke-width: 2;
+    opacity: 0.2;
+    transition: all 0.5s ease;
+}
+
+.connection-line.active {
+    stroke: var(--text-main);
+    stroke-width: 3;
+    opacity: 1;
+    filter: drop-shadow(0 0 5px var(--text-main));
+}
+
+/* Nodes */
+.skill-node {
+    position: absolute;
+    transform: translate(-50%, -50%); /* Centralizar no ponto X,Y */
+    width: 60px; height: 60px;
+    background: var(--bg-panel);
+    border: 2px solid var(--text-muted);
+    border-radius: 50%; /* C�rculo ou Hex�gono com clip-path */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 2;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    opacity: 0; /* Come�a invis�vel para anima��o */
+    animation: fadeInNode 0.8s forwards;
+}
+
+/* Varia��o Hexagonal (Opcional, usando clip-path se quisesse, mas border-radius � mais seguro para bordas neon simples) */
+
+.node-icon { 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem; 
+    margin-bottom: 0;
+}
+.node-label { 
+    position: absolute; 
+    bottom: -25px; 
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150px; 
+    text-align: center; 
+    font-size: 0.75rem; 
+    font-family: var(--font-code);
+    color: var(--text-muted);
+    pointer-events: none;
+    text-shadow: 0 2px 2px rgba(0,0,0,0.8);
+}
+
+/* Cores de Status */
+.status-mastered {
+    border-color: var(--color-data);
+    box-shadow: 0 0 10px rgba(10, 255, 96, 0.1);
+}
+.status-developing {
+    border-color: var(--color-wip);
+    box-shadow: 0 0 10px rgba(255, 230, 0, 0.1);
+}
+
+/* Hover/Active Effects */
+.skill-node:hover, .skill-node.active {
+    transform: translate(-50%, -50%) scale(1.2);
+    z-index: 10;
+    background: var(--bg-dark);
+}
+
+.skill-node.status-mastered:hover, .skill-node.status-mastered.active {
+    box-shadow: 0 0 20px var(--color-data), inset 0 0 10px var(--color-data);
+    border-color: #fff;
+}
+
+.skill-node.status-developing:hover, .skill-node.status-developing.active {
+    box-shadow: 0 0 20px var(--color-wip), inset 0 0 10px var(--color-wip);
+    border-color: #fff;
+}
+
+/* Tooltip / Side Card Styles */
+.skill-info-card {
+    background: var(--bg-panel);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 2rem;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.skill-info-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 4px; height: 100%;
+    background: var(--text-muted);
+    transition: 0.3s;
+}
+
+.tooltip-title {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-main);
+}
+
+.tooltip-status {
+    font-family: var(--font-code);
+    font-size: 0.8rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 1rem;
+    background: rgba(255,255,255,0.05);
+}
+
+.status-green { color: var(--color-data); border: 1px solid var(--color-data); }
+.status-yellow { color: var(--color-wip); border: 1px solid var(--color-wip); }
+
+.tooltip-desc {
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+/* Animations */
+@keyframes fadeInNode {
+    from { opacity: 0; transform: translate(-50%, -40%); }
+    to { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+.tooltip-content.show {
+    animation: slideInRight 0.3s ease-out;
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* Responsividade */
+@media (max-width: 900px) {
+    .skill-tree-section { flex-direction: column-reverse; padding-top: 100px; }
+    .about-content { width: 100%; max-width: none; }
+    .skill-tree-container { width: 100%; height: 500px; }
+}
+
+
+/* --- Mobile Skill Cards (Accordion) --- */
+.mobile-skill-cards {
+    display: none; /* Desktop hidden */
+    width: 100%;
+    margin-top: 2rem;
+    flex-direction: column;
+    gap: 1rem;
+    position: relative;
+    z-index: 10;
+}
+
+.mobile-card {
+    background: rgba(20, 22, 31, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.mobile-card-header {
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: bold;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.mobile-card-header:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.mobile-card-icon { margin-right: 10px; }
+.toggle-icon { transition: transform 0.3s; }
+
+.mobile-card.open .toggle-icon { transform: rotate(180deg); }
+.mobile-card.open { border-color: var(--text-muted); }
+
+/* Cores espec�ficas por tema no mobile */
+.mobile-card.theme-dev.open { border-color: var(--color-dev); box-shadow: 0 0 15px rgba(0, 243, 255, 0.1); }
+.mobile-card.theme-dev .mobile-card-header { color: var(--color-dev); }
+
+.mobile-card.theme-data.open { border-color: var(--color-data); box-shadow: 0 0 15px rgba(10, 255, 96, 0.1); }
+.mobile-card.theme-data .mobile-card-header { color: var(--color-data); }
+
+.mobile-card.theme-game.open { border-color: var(--color-game); box-shadow: 0 0 15px rgba(189, 0, 255, 0.1); }
+.mobile-card.theme-game .mobile-card-header { color: var(--color-game); }
+
+.mobile-card-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+    padding: 0 1.5rem;
+    color: var(--text-muted);
+}
+
+.mobile-card-body ul {
+    padding: 1rem 0;
+    list-style: none;
+}
+
+.mobile-card-body li {
+    margin-bottom: 0.8rem;
+    padding-left: 1rem;
+    border-left: 2px solid rgba(255,255,255,0.1);
+}
+
+.mobile-card.open .mobile-card-body {
+    max-height: 500px; /* Altura suficiente para conte�do */
+}
+
+/* Responsividade Atualizada */
+@media (max-width: 900px) {
+    .skill-tree-section { 
+        display: block; /* Remove flex layout lateral */
+        padding-top: 100px;
+        height: auto;
+        min-height: auto;
+    }
+    
+    .about-content { 
+        width: 100%; 
+        max-width: 100%; 
+        margin-bottom: 3rem;
+    }
+
+    /* Esconde a �rvore complexa e o tooltip lateral no mobile */
+    .skill-tree-container, .skill-info-card {
+        display: none;
+    }
+
+    /* Mostra os cards mobile */
+    .mobile-skill-cards {
+        display: flex;
+    }
+}
+
+
+/* --- Space Floating Effect --- */
+.skill-tree-container {
+    perspective: 1000px; /* Profundidade 3D */
+    overflow: hidden; /* Mant�m o efeito contido */
+}
+
+/* Camada interna que vai receber o tilt e anima��o */
+.tree-layer {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.1s ease-out; /* Suavidade no movimento do mouse */
+    animation: floatingSpace 6s ease-in-out infinite;
+}
+
+@keyframes floatingSpace {
+    0% { transform: translateY(0px) rotateX(0deg); }
+    50% { transform: translateY(-10px) rotateX(2deg); }
+    100% { transform: translateY(0px) rotateX(0deg); }
+}
+
+/* Background de estrelas (pseudo-elemento) */
+.skill-tree-container::after {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0));
+    background-size: 200px 200px;
+    opacity: 0.3;
+    animation: starsMove 100s linear infinite;
+    z-index: 0;
+    pointer-events: none;
+}
+
+@keyframes starsMove {
+    from { transform: translateY(0); }
+    to { transform: translateY(-100px); }
+}
+
+/* Ajuste nos n�s para suportar o 3D */
+.skill-node {
+    transform: translate(-50%, -50%) translateZ(20px); /* Leve eleva��o */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5); /* Sombra mais distante */
+}
+

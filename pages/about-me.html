@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre Mim | Skill Tree</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="logo"><a href="../index.html">PORTFÓLIO<span class="blink">_</span></a></div>
+        <ul class="nav-links">
+            <li><a href="dev.html" class="link-dev">Programação</a></li>
+            <li><a href="data.html" class="link-data">Dados</a></li>
+            <li><a href="games.html" class="link-game">Games</a></li>
+        </ul>
+    </nav>
+
+    <main class="skill-tree-section">
+        
+        <!-- Grid Background -->
+        <div class="hero-bg-grid"></div>
+
+        <!-- Coluna Esquerda: Info e Tooltip -->
+        <div class="about-content">
+            <h1 style="font-size: 3rem; margin-bottom: 1rem;">SOBRE MIM</h1>
+            <p style="margin-bottom: 2rem; color: var(--text-muted); font-size: 1.1rem;">
+                Analista de Dados & Desenvolvedor Full Stack 
+                Aos 21 anos, atuo na intersecção entre a inteligência de negócios e o desenvolvimento de sistemas. Como Analista de
+                Dados, domino o ecossistema de BI (Excel Avançado, Power Query e DAX), transformando bases complexas em dashboards
+                estratégicos. Como desenvolvedor, foco em arquitetura robusta com C#, .NET e SQL Server, expandindo fronteiras para o
+                desenvolvimento mobile com MAUI e a criação de jogos independentes (Indie Dev). Sou movido pela eficiência técnica e
+                pela resolução de problemas com foco em custo-benefício.
+            </p>
+
+            <!-- Card Dinâmico (Tooltip Fixo - Desktop) -->
+            <div id="skill-tooltip" class="skill-info-card">
+                <div class="tooltip-content">
+                    <h2 class="tooltip-title">Skill Tree</h2>
+                    <span class="tooltip-status status-green" style="border:none; padding:0; background:none; color: var(--text-muted);">
+                        // Selecione uma habilidade
+                    </span>
+                    <p class="tooltip-desc">
+                        Explore minhas competências técnicas e criativas. 
+                    </p>
+                </div>
+            </div>
+
+            <!-- Mobile Cards (Accordion) -->
+            <div class="mobile-skill-cards">
+                
+                <!-- Card Dev -->
+                <div class="mobile-card theme-dev">
+                    <div class="mobile-card-header">
+                        <span><span class="mobile-card-icon">&lt;/&gt;</span> Desenvolvimento</span>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="mobile-card-body">
+                        <ul>
+                            <li><strong>C# .NET</strong>: Backend, APIs e Desktop.</li>
+                            <li><strong>JavaScript</strong>: Frontend e interatividade.</li>
+                            <li><strong>React/Firebase</strong>: SPAs modernas e Cloud.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Card Data -->
+                <div class="mobile-card theme-data">
+                    <div class="mobile-card-header">
+                        <span><span class="mobile-card-icon">📊</span> Dados</span>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="mobile-card-body">
+                        <ul>
+                            <li><strong>Excel (VBA)</strong>: Automação e tratamento.</li>
+                            <li><strong>Power BI (DAX)</strong>: Dashboards e KPIs.</li>
+                            <li><strong>SQL Server</strong>: Banco de dados e Queries.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Card Games -->
+                <div class="mobile-card theme-game">
+                    <div class="mobile-card-header">
+                        <span><span class="mobile-card-icon">🎮</span> Game Dev</span>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="mobile-card-body">
+                        <ul>
+                            <li><strong>Game Logic</strong>: Mecânicas e Prototipagem.</li>
+                            <li><strong>Indie Dev</strong>: Unity/Godot Engines.</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Coluna Direita: A Árvore (Desktop) -->
+        <div id="skill-tree" class="skill-tree-container">
+            <!-- JS vai injetar os nodos e SVG aqui -->
+        </div>
+
+    </main>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script type="module" src="../js/skill-tree.js"></script>
+</body>
+</html>
