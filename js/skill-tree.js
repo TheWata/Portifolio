@@ -96,4 +96,19 @@ document.addEventListener('DOMContentLoaded', async () => {
             n.style.transform = `translate(-50%, -50%) translateZ(20px) rotateY(${-x * 15}deg) rotateX(${y * 15}deg)`;
         });
     });
+
+    // 6. Mobile Cards Accordion
+    const mobileHeaders = document.querySelectorAll('.mobile-card-header');
+    mobileHeaders.forEach(header => {
+        header.addEventListener('click', () => {
+            const card = header.parentElement;
+            
+            // Auto-close others (Accordion effect)
+            document.querySelectorAll('.mobile-card').forEach(c => {
+                if (c !== card) c.classList.remove('open');
+            });
+
+            card.classList.toggle('open');
+        });
+    });
 });

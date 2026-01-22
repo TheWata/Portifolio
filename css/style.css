@@ -326,7 +326,6 @@ ul { list-style: none; }
     display: flex;
     gap: 4rem;
     align-items: center;
-    /* Background removido para usar o grid global */
     overflow: hidden;
 }
 
@@ -419,6 +418,10 @@ ul { list-style: none; }
 }
 
 /* Cores de Status */
+.status-dev {
+    border-color: var(--color-dev);
+    box-shadow: 0 0 10px rgba(0, 243, 255, 0.1);
+}
 .status-mastered {
     border-color: var(--color-data);
     box-shadow: 0 0 10px rgba(10, 255, 96, 0.1);
@@ -437,6 +440,11 @@ ul { list-style: none; }
 
 .skill-node.status-mastered:hover, .skill-node.status-mastered.active {
     box-shadow: 0 0 20px var(--color-data), inset 0 0 10px var(--color-data);
+    border-color: #fff;
+}
+
+.skill-node.status-dev:hover, .skill-node.status-dev.active {
+    box-shadow: 0 0 20px var(--color-dev), inset 0 0 10px var(--color-dev);
     border-color: #fff;
 }
 
@@ -661,5 +669,45 @@ ul { list-style: none; }
 .skill-node {
     transform: translate(-50%, -50%) translateZ(20px); /* Leve eleva��o */
     box-shadow: 0 10px 30px rgba(0,0,0,0.5); /* Sombra mais distante */
+}
+
+
+/* --- N� Personalizado: EU (Root) --- */
+/* O ID do n� � gerado dinamicamente como #node-root no JS */
+#node-root {
+    width: 90px;
+    height: 90px;
+    
+    /* Configura��o de Cores Azul */
+    border-color: #2979ff; /* Azul Real Brilhante */
+    box-shadow: 0 0 20px rgba(41, 121, 255, 0.5); /* Glow Azul */
+    
+    /* Garante que fique acima das linhas */
+    z-index: 5;
+}
+
+#node-root .node-icon svg {
+    /* �cone maior */
+    width: 40px;
+    height: 40px;
+    color: #2979ff; /* �cone tamb�m azul */
+    filter: drop-shadow(0 0 5px rgba(41, 121, 255, 0.8));
+}
+
+#node-root .node-label {
+    /* Ajuste de posi��o e estilo do texto */
+    bottom: -30px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #2979ff;
+    text-shadow: 0 0 8px rgba(41, 121, 255, 0.6);
+}
+
+/* Efeito Hover Exclusivo para o Eu */
+#node-root:hover, #node-root.active {
+    transform: translate(-50%, -50%) scale(1.15) translateZ(30px);
+    box-shadow: 0 0 40px #2979ff, inset 0 0 20px #2979ff;
+    border-color: #ffffff;
+    background: rgba(41, 121, 255, 0.1);
 }
 
