@@ -711,3 +711,265 @@ ul { list-style: none; }
     background: rgba(41, 121, 255, 0.1);
 }
 
+
+/* --- Projetos Layout (Dev Page) --- */
+.projects-section {
+    padding: 6rem 5%;
+    min-height: 100vh;
+    display: flex;
+    gap: 4rem;
+    align-items: flex-start; /* Alinha ao topo pro conteúdo fluir */
+    overflow-x: hidden;
+}
+
+/* Coluna Esquerda: Detalhes do Projeto */
+.project-details-container {
+    flex: 1;
+    position: sticky; /* Sticky para acompanhar o scroll se houver muitos projetos */
+    top: 100px;
+    background: var(--bg-panel);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 2rem;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.project-details-content {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    display: none; /* Escondido até selecionar */
+}
+
+.project-details-content.active {
+    opacity: 1;
+    display: block;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.project-placeholder {
+    text-align: center;
+    color: var(--text-muted);
+}
+.project-placeholder svg {
+    width: 64px; height: 64px; margin-bottom: 1rem; opacity: 0.5;
+}
+
+/* Tipografia Detalhes */
+.project-title {
+    font-size: 2.5rem;
+    color: var(--color-dev);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.project-tags {
+    display: flex; gap: 10px; margin-bottom: 1.5rem;
+}
+.tag {
+    background: rgba(255,255,255,0.05);
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-family: var(--font-code);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.project-description {
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    line-height: 1.8;
+    text-align: justify;
+}
+
+/* Botão Github */
+.btn-github {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 24px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--color-dev);
+    color: var(--color-dev);
+    font-family: var(--font-code);
+    font-weight: bold;
+    border-radius: 5px;
+    transition: all 0.3s;
+    text-decoration: none;
+    width: fit-content;
+}
+.btn-github:hover {
+    background: var(--color-dev);
+    color: #000;
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
+}
+
+/* --- Carousel --- */
+.carousel-container {
+    width: 100%;
+    height: 300px;
+    background: #000;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.carousel-track {
+    display: flex;
+    height: 100%;
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.carousel-slide {
+    min-width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #1a1a1a;
+    font-family: var(--font-code);
+    color: rgba(255,255,255,0.2);
+    font-size: 1.2rem;
+    position: relative;
+}
+
+.carousel-slide img {
+    width: 100%; height: 100%; object-fit: cover;
+}
+
+.carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.5);
+    border: none;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    z-index: 2;
+    transition: 0.3s;
+}
+.carousel-nav:hover { background: var(--color-dev); color: #000; }
+.nav-prev { left: 10px; }
+.nav-next { right: 10px; }
+
+/* Indicadores (dots) */
+.carousel-dots {
+    position: absolute; bottom: 10px; width: 100%;
+    display: flex; justify-content: center; gap: 8px;
+    z-index: 2;
+}
+.dot {
+    width: 8px; height: 8px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 50%;
+    cursor: pointer;
+}
+.dot.active { background: var(--color-dev); box-shadow: 0 0 8px var(--color-dev); }
+
+
+/* Coluna Direita: Cards dos Projetos */
+.project-list-container {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+.project-card {
+    background: var(--bg-panel);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--color-dev);
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.15);
+}
+
+.project-card.active {
+    border-color: var(--color-dev);
+    background: linear-gradient(135deg, var(--bg-panel) 0%, rgba(0, 243, 255, 0.05) 100%);
+    box-shadow: inset 0 0 20px rgba(0, 243, 255, 0.05);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--text-main);
+}
+.project-card:hover .card-title { color: var(--color-dev); }
+
+.card-mini-desc {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.card-arrow {
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s;
+    color: var(--color-dev);
+}
+.project-card:hover .card-arrow { opacity: 1; transform: translateX(0); }
+
+/* Mobile */
+@media (max-width: 900px) {
+    .projects-section {
+        flex-direction: column-reverse; /* Detalhes em cima (popup) ou Cards primeiro? Normalmente Cards. Vamos deixar flex-col padrão */
+        flex-direction: column;
+        padding-top: 100px;
+    }
+    
+    .project-details-container {
+        width: 100%;
+        position: fixed;
+        top: 0; left: 0; height: 100vh;
+        z-index: 2000;
+        border-radius: 0;
+        padding-top: 80px; /* Espaço navbar */
+        transform: translateY(100%); /* Escondido por padrão no mobile */
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .project-details-container.mobile-active {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: all;
+        overflow-y: auto;
+    }
+
+    .close-details-btn {
+        display: block; /* Só visível mobile se a gente adicionar */
+        position: absolute;
+        top: 90px; right: 20px;
+        background: none; border: none;
+        color: white; font-size: 2rem;
+        z-index: 2001;
+    }
+}
+

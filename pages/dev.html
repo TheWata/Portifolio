@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projetos Dev | Portfólio</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="logo"><a href="../index.html">PORTFÓLIO<span class="blink">_</span></a></div>
+        <ul class="nav-links">
+            <li><a href="dev.html" class="link-dev" style="color: var(--color-dev); text-shadow: 0 0 10px var(--color-dev);">Programação</a></li>
+            <li><a href="data.html" class="link-data">Dados</a></li>
+            <li><a href="games.html" class="link-game">Games</a></li>
+        </ul>
+    </nav>
+
+    <main class="projects-section theme-dev">
+
+        <!-- Grid Background -->
+        <div class="hero-bg-grid"></div>
+
+        <!-- Coluna Esquerda: Detalhes do Projeto -->
+        <aside class="project-details-container" id="details-container">
+            <button class="close-details-btn" style="display:none;" onclick="closeMobileDetails()">×</button>
+            
+            <!-- Estado Inicial: Placeholder -->
+            <div class="project-placeholder" id="placeholder">
+                <i data-lucide="code-2"></i>
+                <h3>Selecione um projeto para ver os detalhes</h3>
+                <p>Navegue pela lista ao lado.</p>
+            </div>
+
+            <!-- Conteúdo Dinâmico -->
+            <div class="project-details-content" id="details-content">
+                <h2 class="project-title" id="p-title">Projeto</h2>
+                <div class="project-tags" id="p-tags">
+                    <!-- Tags injetadas via JS -->
+                </div>
+
+                <!-- Carousel -->
+                <div class="carousel-container">
+                    <div class="carousel-track" id="carousel-track">
+                        <!-- Slides injetados via JS -->
+                    </div>
+                    
+                    <button class="carousel-nav nav-prev" onclick="moveSlide(-1)">❮</button>
+                    <button class="carousel-nav nav-next" onclick="moveSlide(1)">❯</button>
+
+                    <div class="carousel-dots" id="carousel-dots">
+                        <!-- Dots injetados via JS -->
+                    </div>
+                </div>
+
+                <p class="project-description" id="p-desc">
+                    Descrição do projeto...
+                </p>
+
+                <a href="#" target="_blank" class="btn-github" id="p-link">
+                    <i data-lucide="github"></i>
+                    Ver no GitHub
+                </a>
+            </div>
+        </aside>
+
+        <!-- Coluna Direita: Lista de Projetos -->
+        <section class="project-list-container">
+            
+            <!-- Card 1: Togather -->
+            <div class="project-card" onclick="selectProject('togather')">
+                <div class="card-header">
+                    <span class="card-title">ToGather</span>
+                    <i data-lucide="users" style="color: var(--color-dev);"></i>
+                </div>
+                <p class="card-mini-desc">Rede Social voltada para Círculos Íntimos e conexões reais.</p>
+                <div style="margin-top: 1rem; display: flex; justify-content: flex-end;">
+                    <i data-lucide="arrow-right" class="card-arrow"></i>
+                </div>
+            </div>
+
+            <!-- Card 2: STATUS -->
+            <div class="project-card" onclick="selectProject('status')">
+                <div class="card-header">
+                    <span class="card-title">STATUS</span>
+                    <i data-lucide="trophy" style="color: var(--color-dev);"></i>
+                </div>
+                <p class="card-mini-desc">Ecossistema de Autaperfeiçoamento Gamificado (Solo Leveling).</p>
+                <div style="margin-top: 1rem; display: flex; justify-content: flex-end;">
+                    <i data-lucide="arrow-right" class="card-arrow"></i>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script>
+        // Dados dos Projetos
+        const projectsData = {
+            togather: {
+                title: 'Togather',
+                tags: ['Social Media', 'Community', 'Photos'],
+                desc: 'Conceito: Rede Social voltada para Círculos Íntimos. O Togather é uma plataforma social desenhada para fortalecer conexões autênticas em grupos reduzidos de amizade. Diferente das redes de massa, o foco reside no compartilhamento diário de momentos através de fotos, incentivando a interação genuína e recorrente dentro de comunidades privadas e nichadas.',
+                link: 'https://github.com/TheWata/Togather',
+                slides: ['Feed Principal', 'Grupos Privados', 'Upload de Momentos']
+            },
+            status: {
+                title: 'STATUS',
+                tags: ['Gamification', 'Productivity', 'RPG'],
+                desc: 'Conceito: Ecossistema de Autaperfeiçoamento Gamificado. Inspirado na dinâmica de progressão de Solo Leveling, o STATUS é um aplicativo de desenvolvimento pessoal que utiliza mecânicas de RPG para transformar metas de vida em conquistas mensuráveis. A plataforma conta com sistemas de leaderboards e rankings regionais, sociais e globais, transformando a evolução individual em uma experiência competitiva e altamente motivadora.',
+                link: 'https://github.com/TheWata/STATUS',
+                slides: ['Dashboard do Jogador', 'Missões Diárias', 'Ranking Global']
+            }
+        };
+
+        let currentSlideIndex = 0;
+        let totalSlides = 0;
+
+        function selectProject(projectId) {
+            const data = projectsData[projectId];
+            if (!data) return;
+
+            // UI Feedback
+            document.querySelectorAll('.project-card').forEach(c => c.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+
+            // Hide Placeholder / Show Content
+            document.getElementById('placeholder').style.display = 'none';
+            const content = document.getElementById('details-content');
+            content.classList.remove('active'); // Reset animation
+            
+            // Populate Data
+            setTimeout(() => {
+                document.getElementById('p-title').textContent = data.title;
+                document.getElementById('p-desc').textContent = data.desc;
+                document.getElementById('p-link').href = data.link;
+
+                // Tags
+                const tagsContainer = document.getElementById('p-tags');
+                tagsContainer.innerHTML = data.tags.map(t => `<span class="tag">#${t}</span>`).join('');
+
+                // Carousel Setup
+                setupCarousel(data.slides);
+                
+                content.style.display = 'block';
+                setTimeout(() => content.classList.add('active'), 50);
+
+                // Mobile View
+                if(window.innerWidth <= 900) {
+                    const container = document.getElementById('details-container');
+                    container.classList.add('mobile-active');
+                    document.querySelector('.close-details-btn').style.display = 'block';
+                }
+            }, 200);
+        }
+
+        function setupCarousel(slides) {
+            const track = document.getElementById('carousel-track');
+            const dots = document.getElementById('carousel-dots');
+            
+            track.innerHTML = '';
+            dots.innerHTML = '';
+            currentSlideIndex = 0;
+            totalSlides = slides.length;
+
+            slides.forEach((slideText, index) => {
+                // Slide
+                const div = document.createElement('div');
+                div.className = 'carousel-slide';
+                // Placeholder Simples (fundo escuro com texto do slide)
+                div.innerHTML = `<span>${slideText}</span>`; 
+                track.appendChild(div);
+
+                // Dot
+                const dot = document.createElement('div');
+                dot.className = `dot ${index === 0 ? 'active' : ''}`;
+                dot.onclick = () => goToSlide(index);
+                dots.appendChild(dot);
+            });
+
+            updateCarousel();
+        }
+
+        function moveSlide(dir) {
+            if (totalSlides === 0) return;
+            currentSlideIndex = (currentSlideIndex + dir + totalSlides) % totalSlides;
+            updateCarousel();
+        }
+
+        function goToSlide(index) {
+            currentSlideIndex = index;
+            updateCarousel();
+        }
+
+        function updateCarousel() {
+            const track = document.getElementById('carousel-track');
+            track.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+            
+            document.querySelectorAll('.dot').forEach((d, i) => {
+                d.classList.toggle('active', i === currentSlideIndex);
+            });
+        }
+
+        function closeMobileDetails() {
+            document.getElementById('details-container').classList.remove('mobile-active');
+        }
+
+        // Initialize Icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
