@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogos | Portfólio</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="logo"><a href="../index.html">PORTFÓLIO<span class="blink">_</span></a></div>
+        <ul class="nav-links">
+            <li><a href="dev.html" class="link-dev">Programação</a></li>
+            <li><a href="data.html" class="link-data">Dados</a></li>
+            <li><a href="games.html" class="link-game" style="color: var(--color-game); text-shadow: 0 0 10px var(--color-game);">Games</a></li>
+        </ul>
+    </nav>
+
+    <main class="projects-section theme-game" style="align-items: center; justify-content: center; flex-direction: column;">
+
+        <!-- Grid Background -->
+        <div class="hero-bg-grid"></div>
+
+        <div style="text-align: center; padding: 2rem; border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; background: var(--bg-panel); backdrop-filter: blur(5px); max-width: 500px;">
+            <i data-lucide="gamepad-2" style="width: 80px; height: 80px; color: var(--color-game); margin-bottom: 1.5rem; filter: drop-shadow(0 0 10px var(--color-game));"></i>
+            
+            <h1 style="font-size: 2.5rem; margin-bottom: 1rem; color: var(--text-main);">Game Dev</h1>
+            
+            <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 2rem;">
+                Ainda não há nada aqui.
+            </p>
+
+            <p style="font-family: var(--font-code); font-size: 0.9rem; color: var(--color-wip);">
+                // Projetos em desenvolvimento...
+            </p>
+        </div>
+
+    </main>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
